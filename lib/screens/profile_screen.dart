@@ -51,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               try {
                 // sign out firebase and google
                 await APIs.auth.signOut();
-                await GoogleSignIn.instance.signOut();
+                // await GoogleSignIn.instance.signOut();
               } catch (e, st) {
                 log('Sign out error: $e\n$st');
               }

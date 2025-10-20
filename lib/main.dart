@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chat_app_ba/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,5 +66,5 @@ Future<void> _initializeFirebase() async {
   //     importance: NotificationImportance.IMPORTANCE_HIGH,
   //     name: 'Chats');
 
-  log('\nNotification Channel Result: ');
+  // log('\nNotification Channel Result: ');
 }
