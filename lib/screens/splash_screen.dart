@@ -8,6 +8,8 @@ import '../../api/apis.dart';
 import 'auth/login_screen.dart';
 import 'home_screen.dart';
 
+late Size mq;
+
 //splash screen
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -55,18 +57,23 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           //app logo
           Positioned(
-            top: mq.height * .15,
-            right: mq.width * .25,
-            width: mq.width * .5,
+            // top: mq.height * .15,
+            // right: mq.width * .25,
+            // width: mq.width * .5,
+            top: .2 * .15,
+            right: .2 * .25,
+            width: .4 * .5,
             child: Image.asset('assets/images/icon.png'),
           ),
 
           //google login button
           Positioned(
-            bottom: mq.height * .15,
-            width: mq.width,
+            // bottom: mq.height * .15,
+            // width: mq.width,
+            bottom: .15 * .15,
+            width: .05,
             child: const Text(
-              'MADE IN INDIA WITH ❤️',
+              'Made with ❤ by Chat App BA',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,

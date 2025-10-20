@@ -27,7 +27,7 @@ class APIs {
     id: user.uid,
     name: user.displayName.toString(),
     email: user.email.toString(),
-    about: "Hey, I'm using We Chat!",
+    about: "Hey, I'm using Chat BA!",
     image: user.photoURL.toString(),
     createdAt: '',
     isOnline: false,
@@ -80,14 +80,14 @@ class APIs {
       };
 
       // Firebase Project > Project Settings > General Tab > Project ID
-      const projectID = 'we-chat-75f13';
+      const projectID = 'chatappba-252d1';
 
       // get firebase admin token
       // final bearerToken = await NotificationAccessToken.getToken;
 
       // log('bearerToken: $bearerToken');
 
-      // // handle null token
+      // handle null token
       // if (bearerToken == null) return;
 
       var res = await post(
@@ -166,7 +166,7 @@ class APIs {
       id: user.uid,
       name: user.displayName.toString(),
       email: user.email.toString(),
-      about: "Hey, I'm using We Chat!",
+      about: "Hey, I'm using Chat BA!",
       image: user.photoURL.toString(),
       createdAt: time,
       isOnline: false,
