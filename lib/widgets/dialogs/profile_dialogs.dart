@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// import '../../main.dart';
+import '../../main.dart';
 import '../../models/chat_user.dart';
 import '../../screens/view_profile_screen.dart';
 import '../profile_image.dart';
@@ -20,30 +20,24 @@ class ProfileDialog extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       content: SizedBox(
-        // width: mq.width * .6,
-        // height: mq.height * .35,
-        width: .6 * .6,
-        height: .35 * .35,
+        width: mq.width * .6,
+        height: mq.height * .35,
+
         child: Stack(
           children: [
             //user profile picture
             Positioned(
-              // top: mq.height * .075,
-              // left: mq.width * .1,
-              top: .75 * .075,
-              left: .1 * .1,
-              // child: ProfileImage(size: mq.width * .5, url: user.image),
-              child: ProfileImage(size: .5 * .5, url: user.image),
+              top: mq.height * .075,
+              left: mq.width * .1,
+              child: ProfileImage(size: mq.width * .5, url: user.image),
             ),
 
             //user name
             Positioned(
-              // left: mq.width * .04,
-              // top: mq.height * .02,
-              // width: mq.width * .55,
-              left: .05 * .04,
-              top: .04 * .02,
-              width: .55 * .55,
+              left: mq.width * .04,
+              top: mq.height * .02,
+              width: mq.width * .55,
+
               child: Text(
                 user.name,
                 style: const TextStyle(

@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Sign in to Firebase with the Google credential
       return await _auth.signInWithCredential(credential);
     } catch (e) {
-      print("Google Sign-In Error: $e");
+      log("Google Sign-In Error: $e");
       return null;
     }
   }
@@ -94,13 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     //initializing media query (for getting device screen size)
-    mq = MediaQuery.sizeOf(context);
+    // mq = MediaQuery.sizeOf(context);
 
     return Scaffold(
       //app bar
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Welcome to We Chat'),
+        title: const Text('Welcome to Chat BA'),
       ),
 
       //body

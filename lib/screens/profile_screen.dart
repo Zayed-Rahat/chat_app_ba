@@ -2,12 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../api/apis.dart';
 import '../../helpers/dialogs.dart';
-// import '../../main.dart';
+import '../main.dart';
 import '../../models/chat_user.dart';
 import '../widgets/profile_image.dart';
 import 'auth/login_screen.dart';
@@ -28,8 +28,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final mq = MediaQuery.of(context).size;
-
     return GestureDetector(
       // for hiding keyboard
       onTap: FocusScope.of(context).unfocus,
@@ -202,8 +200,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
-  late Size mq;
 
   // bottom sheet for picking a profile picture for user
   void _showBottomSheet() {
