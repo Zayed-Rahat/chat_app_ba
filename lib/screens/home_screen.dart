@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 
 import '../api/apis.dart';
 import '../helpers/dialogs.dart';
-import '../main.dart';
+// import '../main.dart';
 import '../models/chat_user.dart';
 import '../widgets/chat_user_card.dart';
 import '../widgets/profile_image.dart';

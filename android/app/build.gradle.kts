@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-     namespace = "com.example.chat_app_ba"
+    namespace = "com.example.chat_app_ba"
     compileSdk = 36
 
     compileOptions {

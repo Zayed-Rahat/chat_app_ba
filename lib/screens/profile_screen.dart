@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../api/apis.dart';
 import '../../helpers/dialogs.dart';
-import '../../main.dart';
+// import '../../main.dart';
 import '../../models/chat_user.dart';
 import '../widgets/profile_image.dart';
 import 'auth/login_screen.dart';

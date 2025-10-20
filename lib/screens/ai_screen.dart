@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../helpers/dialogs.dart';
-import '../main.dart';
+// import '../main.dart';
 import '../models/message.dart';
 // import '../widgets/ai_message_card.dart';
 
