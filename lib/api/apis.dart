@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -229,26 +229,65 @@ class APIs {
   }
 
   // update profile picture of user
+  // static Future<void> updateProfilePicture(File file) async {
+  //   //getting image file extension
+  //   final ext = file.path.split('.').last;
+  //   log('Extension: $ext');
+
+  //   //storage file ref with path
+  //   final ref = storage.ref().child('profile_pictures/${user.uid}.$ext');
+
+  //   //uploading image
+  //   await ref.putFile(file, SettableMetadata(contentType: 'image/$ext')).then((
+  //     p0,
+  //   ) {
+  //     log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
+  //   });
+
+  //   //updating image in firestore database
+  //   me.image = await ref.getDownloadURL();
+  //   await firestore.collection('users').doc(user.uid).update({
+  //     'image': me.image,
+  //   });
+  // }
+
+  static const String cloudName = 'azurahat';
+  static const String uploadPreset = 'flutter_unsigned';
+
   static Future<void> updateProfilePicture(File file) async {
-    //getting image file extension
-    final ext = file.path.split('.').last;
-    log('Extension: $ext');
+    try {
+      final ext = file.path.split('.').last;
+      log('Extension: $ext');
 
-    //storage file ref with path
-    final ref = storage.ref().child('profile_pictures/${user.uid}.$ext');
+      // Prepare upload URL
+      final url = Uri.parse(
+        'https://api.cloudinary.com/v1_1/$cloudName/image/upload',
+      );
 
-    //uploading image
-    await ref.putFile(file, SettableMetadata(contentType: 'image/$ext')).then((
-      p0,
-    ) {
-      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
-    });
+      // Create a multipart request
+      final request = http.MultipartRequest('POST', url)
+        ..fields['upload_preset'] = uploadPreset
+        ..fields['folder'] = 'profile_pictures'
+        ..files.add(await http.MultipartFile.fromPath('file', file.path));
 
-    //updating image in firestore database
-    me.image = await ref.getDownloadURL();
-    await firestore.collection('users').doc(user.uid).update({
-      'image': me.image,
-    });
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(await response.stream.bytesToString());
+        final imageUrl = responseData['secure_url'];
+        log('Uploaded to Cloudinary: $imageUrl');
+
+        // Update Firestore (optional)
+        me.image = imageUrl;
+        await firestore.collection('users').doc(user.uid).update({
+          'image': me.image,
+        });
+      } else {
+        log('Cloudinary upload failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      log('Error uploading to Cloudinary: $e');
+    }
   }
 
   // for getting specific user info
@@ -340,25 +379,60 @@ class APIs {
   }
 
   //send chat image
+  // static Future<void> sendChatImage(ChatUser chatUser, File file) async {
+  //   //getting image file extension
+  //   final ext = file.path.split('.').last;
+
+  //   //storage file ref with path
+  //   final ref = storage.ref().child(
+  //     'images/${getConversationID(chatUser.id)}/${DateTime.now().millisecondsSinceEpoch}.$ext',
+  //   );
+
+  //   //uploading image
+  //   await ref.putFile(file, SettableMetadata(contentType: 'image/$ext')).then((
+  //     p0,
+  //   ) {
+  //     log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
+  //   });
+
+  //   //updating image in firestore database
+  //   final imageUrl = await ref.getDownloadURL();
+  //   await sendMessage(chatUser, imageUrl, Type.image);
+  // }
+
   static Future<void> sendChatImage(ChatUser chatUser, File file) async {
-    //getting image file extension
-    final ext = file.path.split('.').last;
+    try {
+      // Get image file extension
+      final ext = file.path.split('.').last;
+      log('Extension: $ext');
 
-    //storage file ref with path
-    final ref = storage.ref().child(
-      'images/${getConversationID(chatUser.id)}/${DateTime.now().millisecondsSinceEpoch}.$ext',
-    );
+      // Cloudinary upload URL
+      final url = Uri.parse(
+        'https://api.cloudinary.com/v1_1/$cloudName/image/upload',
+      );
 
-    //uploading image
-    await ref.putFile(file, SettableMetadata(contentType: 'image/$ext')).then((
-      p0,
-    ) {
-      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
-    });
+      // Create a multipart request
+      final request = http.MultipartRequest('POST', url)
+        ..fields['upload_preset'] = uploadPreset
+        ..fields['folder'] = 'chat_images'
+        ..files.add(await http.MultipartFile.fromPath('file', file.path));
 
-    //updating image in firestore database
-    final imageUrl = await ref.getDownloadURL();
-    await sendMessage(chatUser, imageUrl, Type.image);
+      // Send request
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(await response.stream.bytesToString());
+        final imageUrl = responseData['secure_url'];
+        log('Uploaded chat image to Cloudinary: $imageUrl');
+
+        // Send message with the uploaded image URL
+        await sendMessage(chatUser, imageUrl, Type.image);
+      } else {
+        log('Cloudinary upload failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      log('Error uploading chat image to Cloudinary: $e');
+    }
   }
 
   //delete message
