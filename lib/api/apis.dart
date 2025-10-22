@@ -10,6 +10,7 @@ import 'package:http/http.dart';
 
 import '../models/chat_user.dart';
 import '../models/message.dart';
+import 'notification_access_token.dart';
 // import 'notification_access_token.dart';
 
 class APIs {
@@ -51,16 +52,6 @@ class APIs {
         log('Push Token: $t');
       }
     });
-
-    // for handling foreground messages
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   log('Got a message whilst in the foreground!');
-    //   log('Message data: ${message.data}');
-
-    //   if (message.notification != null) {
-    //     log('Message also contained a notification: ${message.notification}');
-    //   }
-    // });
   }
 
   // for sending push notification (Updated Codes)
@@ -83,12 +74,12 @@ class APIs {
       const projectID = 'chatappba-252d1';
 
       // get firebase admin token
-      // final bearerToken = await NotificationAccessToken.getToken;
+      final bearerToken = await NotificationAccessToken.getToken;
 
       // log('bearerToken: $bearerToken');
 
       // handle null token
-      // if (bearerToken == null) return;
+      if (bearerToken == null) return;
 
       var res = await post(
         Uri.parse(
@@ -96,7 +87,7 @@ class APIs {
         ),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-          // HttpHeaders.authorizationHeader: 'Bearer $bearerToken',
+          HttpHeaders.authorizationHeader: 'Bearer $bearerToken',
         },
         body: jsonEncode(body),
       );
@@ -229,28 +220,6 @@ class APIs {
   }
 
   // update profile picture of user
-  // static Future<void> updateProfilePicture(File file) async {
-  //   //getting image file extension
-  //   final ext = file.path.split('.').last;
-  //   log('Extension: $ext');
-
-  //   //storage file ref with path
-  //   final ref = storage.ref().child('profile_pictures/${user.uid}.$ext');
-
-  //   //uploading image
-  //   await ref.putFile(file, SettableMetadata(contentType: 'image/$ext')).then((
-  //     p0,
-  //   ) {
-  //     log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
-  //   });
-
-  //   //updating image in firestore database
-  //   me.image = await ref.getDownloadURL();
-  //   await firestore.collection('users').doc(user.uid).update({
-  //     'image': me.image,
-  //   });
-  // }
-
   static const String cloudName = 'azurahat';
   static const String uploadPreset = 'flutter_unsigned';
 
@@ -379,27 +348,6 @@ class APIs {
   }
 
   //send chat image
-  // static Future<void> sendChatImage(ChatUser chatUser, File file) async {
-  //   //getting image file extension
-  //   final ext = file.path.split('.').last;
-
-  //   //storage file ref with path
-  //   final ref = storage.ref().child(
-  //     'images/${getConversationID(chatUser.id)}/${DateTime.now().millisecondsSinceEpoch}.$ext',
-  //   );
-
-  //   //uploading image
-  //   await ref.putFile(file, SettableMetadata(contentType: 'image/$ext')).then((
-  //     p0,
-  //   ) {
-  //     log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
-  //   });
-
-  //   //updating image in firestore database
-  //   final imageUrl = await ref.getDownloadURL();
-  //   await sendMessage(chatUser, imageUrl, Type.image);
-  // }
-
   static Future<void> sendChatImage(ChatUser chatUser, File file) async {
     try {
       // Get image file extension
