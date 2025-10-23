@@ -35,6 +35,8 @@ assets/keys/serviceAccountKey.json
 .pub-cache/
 .pub/
 /build/
+/installers/
+
 
 # Symbolication related
 app.*.symbols
