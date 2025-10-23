@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 
 import '../api/apis.dart';
 import '../helpers/dialogs.dart';
@@ -11,7 +11,7 @@ import '../helpers/dialogs.dart';
 import '../models/chat_user.dart';
 import '../widgets/chat_user_card.dart';
 import '../widgets/profile_image.dart';
-import 'ai_screen.dart';
+// import 'ai_screen.dart';
 import 'profile_screen.dart';
 
 //home screen -- where all available contacts are shown
@@ -155,19 +155,19 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           //floating button to add new user
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FloatingActionButton(
-              backgroundColor: Colors.white,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AiScreen()),
-                );
-              },
-              child: Lottie.asset('assets/lottie/ai.json', width: 40),
-            ),
-          ),
+          // floatingActionButton: Padding(
+          //   padding: const EdgeInsets.only(bottom: 10),
+          //   child: FloatingActionButton(
+          //     backgroundColor: Colors.white,
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (_) => const AiScreen()),
+          //       );
+          //     },
+          //     child: Lottie.asset('assets/lottie/ai.json', width: 40),
+          //   ),
+          // ),
 
           //body
           body: StreamBuilder(
