@@ -276,8 +276,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       onTap: () {
-                        if (_showEmoji)
+                        if (_showEmoji) {
                           setState(() => _showEmoji = !_showEmoji);
+                        }
                       },
                       decoration: const InputDecoration(
                         hintText: 'Type Something...',
