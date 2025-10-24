@@ -30,6 +30,16 @@ It uses a simple layered / feature-based structure with a service-style API laye
 
 ## Screenshots
 
+<kbd>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/1.png" width=30% height=30%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/2.png" width=30% height=30%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/3.png" width=30% height=30%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/4.png" width=30% height=30%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/5.png" width=30% height=30%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/6.png" width=30% height=30%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/7.png" width=30% height=30%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/8.png" width=30% height=30%/>
+</kbd>
 
 
 ---
@@ -38,8 +48,16 @@ It uses a simple layered / feature-based structure with a service-style API laye
 ### Clone the repository
 
 ```bash
+
 git clone https://github.com/Zayed-Rahat/chat_app_ba.git
 cd chat_app_ba
+
+```
+### Download exe file from
+
+```bash
+
+  https://github.com/Zayed-Rahat/chat_app_ba/installers
 
 ```
 
