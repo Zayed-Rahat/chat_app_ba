@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart';
 
 import '../models/chat_user.dart';
@@ -19,9 +18,6 @@ class APIs {
 
   // for accessing cloud firestore database
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  // for accessing firebase storage
-  static FirebaseStorage storage = FirebaseStorage.instance;
 
   // for storing self information
   static ChatUser me = ChatUser(
@@ -95,7 +91,7 @@ class APIs {
       log('Response status: ${res.statusCode}');
       log('Response body: ${res.body}');
     } catch (e) {
-      log('\nsendPushNotificationE: $e');
+      log('\nsendPushNotification Error: $e');
     }
   }
 
@@ -391,7 +387,7 @@ class APIs {
         .delete();
 
     if (message.type == Type.image) {
-      await storage.refFromURL(message.msg).delete();
+      log('Message deleted. Image URL: ${message.msg}');
     }
   }
 

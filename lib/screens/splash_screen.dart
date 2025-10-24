@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
             bottom: mq.height * .15,
             width: mq.width,
             child: const Text(
-              'Made with ❤ by Chat App BA',
+              'Welcome to Chat App BA',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,

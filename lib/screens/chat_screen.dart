@@ -39,15 +39,6 @@ class _ChatScreenState extends State<ChatScreen> {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: PopScope(
-        // onWillPop: () {
-        //   if (_showEmoji) {
-        //     setState(() => _showEmoji = !_showEmoji);
-        //     return Future.value(false);
-        //   } else {
-        //     return Future.value(true);
-        //   }
-        // },
-
         //if emojis are shown & back button is pressed then hide emojis
         //or else simple close current screen on back button click
         canPop: false,

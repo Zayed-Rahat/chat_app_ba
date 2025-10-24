@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../api/apis.dart';
@@ -49,7 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               try {
                 // sign out firebase and google
                 await APIs.auth.signOut();
-                // await GoogleSignIn.instance.signOut();
               } catch (e, st) {
                 log('Sign out error: $e\n$st');
               }
@@ -145,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
-                      hintText: 'eg. Happy Singh',
+                      hintText: 'eg. Jon',
                       label: Text('Name'),
                     ),
                   ),
@@ -164,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
-                      hintText: 'eg. Feeling Happy',
+                      hintText: 'eg. Feeling Awsome',
                       label: Text('About'),
                     ),
                   ),
