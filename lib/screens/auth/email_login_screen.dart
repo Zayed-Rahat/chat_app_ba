@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../api/apis.dart';
@@ -24,6 +26,20 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
   bool _isLogin = true; // Toggle between login and signup
   bool _isLoading = false;
   bool _obscurePassword = true;
+
+  // Check if running on desktop
+  bool get isDesktop =>
+      !kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS);
+
+  // Responsive sizing
+  double get maxWidth => isDesktop ? 500.0 : double.infinity;
+  double get horizontalPadding => isDesktop ? 40.0 : mq.width * 0.05;
+  double get verticalPadding => isDesktop ? 40.0 : mq.height * 0.05;
+  double get logoSize => isDesktop ? 120.0 : mq.width * 0.3;
+  double get spacing => isDesktop ? 24.0 : mq.height * 0.02;
+  double get buttonHeight => isDesktop ? 50.0 : mq.height * 0.06;
+  double get fontSize => isDesktop ? 16.0 : 16.0;
+  double get titleFontSize => isDesktop ? 24.0 : 20.0;
 
   @override
   void dispose() {
@@ -203,7 +219,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
     }
   }
 
-  // Handle form submission
+  // Handle form submission (with Enter key support)
   void _handleSubmit() {
     if (_isLogin) {
       _signInWithEmail();
@@ -218,150 +234,283 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isLogin ? 'Login' : 'Create Account'),
+        title: Text(
+          _isLogin ? 'Login' : 'Create Account',
+          style: TextStyle(fontSize: titleFontSize),
+        ),
         centerTitle: true,
+        elevation: isDesktop ? 0 : 1,
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: mq.width * 0.05,
-            vertical: mq.height * 0.05,
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // App Logo
-                Image.asset('assets/images/icon.png', width: mq.width * 0.3),
-
-                SizedBox(height: mq.height * 0.05),
-
-                // Name field (only for signup)
-                if (!_isLogin)
-                  TextFormField(
-                    controller: _nameController,
-                    validator: _validateName,
-                    decoration: InputDecoration(
-                      labelText: 'Name',
-                      prefixIcon: const Icon(Icons.person),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+          child: Container(
+            constraints: BoxConstraints(maxWidth: maxWidth),
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: verticalPadding,
+            ),
+            child: Card(
+              elevation: isDesktop ? 4 : 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(isDesktop ? 16 : 0),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(isDesktop ? 40.0 : 24.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // App Logo
+                      Center(
+                        child: Image.asset(
+                          'assets/images/icon.png',
+                          width: logoSize,
+                          height: logoSize,
+                        ),
                       ),
-                    ),
-                  ),
 
-                if (!_isLogin) SizedBox(height: mq.height * 0.02),
+                      SizedBox(height: spacing * 1.5),
 
-                // Email field
-                TextFormField(
-                  controller: _emailController,
-                  validator: _validateEmail,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    prefixIcon: const Icon(Icons.email),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: mq.height * 0.02),
-
-                // Password field
-                TextFormField(
-                  controller: _passwordController,
-                  validator: _validatePassword,
-                  obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
+                      // Title
+                      Text(
+                        _isLogin ? 'Welcome Back!' : 'Create Your Account',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: titleFontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
 
-                SizedBox(height: mq.height * 0.03),
+                      SizedBox(height: spacing),
 
-                // Submit button
-                SizedBox(
-                  width: double.infinity,
-                  height: mq.height * 0.06,
-                  child: ElevatedButton(
-                    onPressed: _isLoading ? null : _handleSubmit,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                      // Subtitle
+                      Text(
+                        _isLogin
+                            ? 'Sign in to continue'
+                            : 'Fill in your details to get started',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: fontSize - 2,
+                          color: Colors.grey[600],
+                        ),
                       ),
-                    ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
+
+                      SizedBox(height: spacing * 1.5),
+
+                      // Name field (only for signup)
+                      if (!_isLogin) ...[
+                        TextFormField(
+                          controller: _nameController,
+                          validator: _validateName,
+                          textInputAction: TextInputAction.next,
+                          style: TextStyle(fontSize: fontSize),
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                            hintText: 'Enter your full name',
+                            prefixIcon: const Icon(Icons.person),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                          )
-                        : Text(
-                            _isLogin ? 'Login' : 'Sign Up',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                            filled: true,
+                            fillColor: Colors.grey[50],
+                          ),
+                        ),
+                        SizedBox(height: spacing),
+                      ],
+
+                      // Email field
+                      TextFormField(
+                        controller: _emailController,
+                        validator: _validateEmail,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        style: TextStyle(fontSize: fontSize),
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          hintText: 'Enter your email',
+                          prefixIcon: const Icon(Icons.email),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[50],
+                        ),
+                      ),
+
+                      SizedBox(height: spacing),
+
+                      // Password field
+                      TextFormField(
+                        controller: _passwordController,
+                        validator: _validatePassword,
+                        obscureText: _obscurePassword,
+                        textInputAction: TextInputAction.done,
+                        style: TextStyle(fontSize: fontSize),
+                        onFieldSubmitted: (_) => _handleSubmit(),
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          hintText: 'Enter your password',
+                          prefixIcon: const Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[50],
+                        ),
+                      ),
+
+                      // Forgot password link (only for login)
+                      if (_isLogin) ...[
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: _showForgotPasswordDialog,
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(fontSize: fontSize - 2),
                             ),
                           ),
-                  ),
-                ),
+                        ),
+                      ] else
+                        SizedBox(height: spacing),
 
-                SizedBox(height: mq.height * 0.02),
+                      SizedBox(height: spacing),
 
-                // Toggle between login and signup
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      _isLogin
-                          ? "Don't have an account? "
-                          : "Already have an account? ",
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _isLogin = !_isLogin;
-                          _formKey.currentState?.reset();
-                        });
-                      },
-                      child: Text(
-                        _isLogin ? 'Sign Up' : 'Login',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      // Submit button
+                      SizedBox(
+                        height: buttonHeight,
+                        child: ElevatedButton(
+                          onPressed: _isLoading ? null : _handleSubmit,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            elevation: 2,
+                          ),
+                          child: _isLoading
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Text(
+                                  _isLogin ? 'Login' : 'Sign Up',
+                                  style: TextStyle(
+                                    fontSize: fontSize,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
 
-                // Forgot password (only for login)
-                if (_isLogin)
-                  TextButton(
-                    onPressed: _showForgotPasswordDialog,
-                    child: const Text('Forgot Password?'),
+                      SizedBox(height: spacing * 1.5),
+
+                      // Divider
+                      Row(
+                        children: [
+                          Expanded(child: Divider(color: Colors.grey[400])),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'OR',
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: fontSize - 2,
+                              ),
+                            ),
+                          ),
+                          Expanded(child: Divider(color: Colors.grey[400])),
+                        ],
+                      ),
+
+                      SizedBox(height: spacing),
+
+                      // Toggle between login and signup
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            _isLogin
+                                ? "Don't have an account? "
+                                : "Already have an account? ",
+                            style: TextStyle(fontSize: fontSize - 1),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _isLogin = !_isLogin;
+                                _formKey.currentState?.reset();
+                              });
+                            },
+                            child: Text(
+                              _isLogin ? 'Sign Up' : 'Login',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSize - 1,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // Platform info (desktop only)
+                      if (isDesktop) ...[
+                        SizedBox(height: spacing),
+                        Center(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.computer,
+                                  size: 16,
+                                  color: Colors.blue[700],
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Windows Desktop App',
+                                  style: TextStyle(
+                                    fontSize: fontSize - 4,
+                                    color: Colors.blue[700],
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-              ],
+                ),
+              ),
             ),
           ),
         ),
@@ -372,17 +521,48 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
   // Show forgot password dialog
   void _showForgotPasswordDialog() {
     final emailController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Reset Password'),
-        content: TextFormField(
-          controller: emailController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(
-            labelText: 'Email',
-            hintText: 'Enter your email address',
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            Icon(Icons.lock_reset, color: Theme.of(context).primaryColor),
+            const SizedBox(width: 12),
+            const Text('Reset Password'),
+          ],
+        ),
+        content: SizedBox(
+          width: isDesktop ? 400 : double.maxFinite,
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Enter your email address and we\'ll send you a link to reset your password.',
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  autofocus: true,
+                  validator: _validateEmail,
+                  style: TextStyle(fontSize: fontSize),
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Enter your email address',
+                    prefixIcon: const Icon(Icons.email),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         actions: [
@@ -391,13 +571,17 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
             child: const Text('Cancel'),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).primaryColor,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
             onPressed: () async {
-              final email = emailController.text.trim();
+              if (!formKey.currentState!.validate()) return;
 
-              if (email.isEmpty) {
-                Dialogs.showSnackbar(context, 'Please enter your email');
-                return;
-              }
+              final email = emailController.text.trim();
 
               try {
                 await APIs.auth.sendPasswordResetEmail(email: email);
@@ -418,11 +602,12 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 }
 
                 if (mounted) {
+                  Navigator.pop(context);
                   Dialogs.showSnackbar(context, message);
                 }
               }
             },
-            child: const Text('Send'),
+            child: const Text('Send Reset Link'),
           ),
         ],
       ),

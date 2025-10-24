@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -131,11 +132,22 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           // App logo
           AnimatedPositioned(
-            top: mq.height * .15,
-            right: _isAnimate ? mq.width * .25 : -mq.width * .5,
-            width: mq.width * .5,
+            top: isWindows ? mq.height * .1 : mq.height * .15,
+            right: _isAnimate
+                ? (isWindows ? mq.width * .35 : mq.width * .25)
+                : -mq.width * .5,
+            width: isWindows
+                ? math.min(mq.width * .4, 300) // Limit max width on Windows
+                : mq.width * .5,
+            // ignore: sort_child_properties_last
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: isWindows ? 300 : double.infinity,
+                maxHeight: isWindows ? 300 : double.infinity,
+              ),
+              child: Image.asset('assets/images/icon.png', fit: BoxFit.contain),
+            ),
             duration: const Duration(seconds: 1),
-            child: Image.asset('assets/images/icon.png'),
           ),
 
           // Platform-specific login button
