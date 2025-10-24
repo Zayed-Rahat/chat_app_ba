@@ -31,14 +31,14 @@ It uses a simple layered / feature-based structure with a service-style API laye
 ## Screenshots
 
 <kbd>
-  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/1.jpeg" width=30% height=40%/>
-  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/2.jpeg" width=30% height=40%/>
-  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/3.jpeg" width=30% height=40%/>
-  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/4.jpeg" width=30% height=40%/>
-  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/5.jpeg" width=30% height=40%/>
-  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/6.jpeg" width=30% height=40%/>
-  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/7.jpeg" width=30% height=40%/>
-  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/master/screenshots/8.jpeg" width=30% height=40%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/main/screenshots/1.jpeg" width=30% height=40%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/main/screenshots/2.jpeg" width=30% height=40%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/main/screenshots/3.jpeg" width=30% height=40%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/main/screenshots/4.jpeg" width=30% height=40%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/main/screenshots/5.jpeg" width=30% height=40%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/main/screenshots/6.jpeg" width=30% height=40%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/main/screenshots/7.jpeg" width=30% height=40%/>
+  <img src="https://github.com/Zayed-Rahat/chat_app_ba/blob/main/screenshots/8.jpeg" width=30% height=40%/>
 </kbd>
 
 
