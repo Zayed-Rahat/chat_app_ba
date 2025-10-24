@@ -170,27 +170,60 @@ class _ChatScreenState extends State<ChatScreen> {
 
             return Row(
               children: [
-                //back button
+                // back button
                 IconButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    // Check if there are routes to pop
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    } else {
+                      // Optionally show a confirmation dialog
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Confirm Exit'),
+                            content: const Text(
+                              'Are you sure you want to exit?',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(), // Cancel
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  // Perform sign-out or any other action
+                                  Navigator.of(context).pop(); // Close dialog
+                                  // Optionally sign out here
+                                },
+                                child: const Text('Yes'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
                   icon: const Icon(Icons.arrow_back, color: Colors.black54),
                 ),
 
-                //user profile picture
+                // user profile picture
                 ProfileImage(
                   size: mq.height * .05,
                   url: list.isNotEmpty ? list[0].image : widget.user.image,
                 ),
 
-                //for adding some space
+                // for adding some space
                 const SizedBox(width: 10),
 
-                //user name & last seen time
+                // user name & last seen time
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //user name
+                    // user name
                     Text(
                       list.isNotEmpty ? list[0].name : widget.user.name,
                       style: const TextStyle(
@@ -200,10 +233,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
 
-                    //for adding some space
+                    // for adding some space
                     const SizedBox(height: 2),
 
-                    //last seen time of user
+                    // last seen time of user
                     Text(
                       list.isNotEmpty
                           ? list[0].isOnline
