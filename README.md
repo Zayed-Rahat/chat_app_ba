@@ -54,7 +54,7 @@ lib/
 ├── models/          # Data models like ChatUser and Message
 ├── screens/         # All app screens (Home, Chat, Profile)
 ├── widgets/         # Reusable UI widgets
-└── firebase_option.dart      # Reusable UI widgets
+└── firebase_option.dart     
 └── main.dart        # App entry point
 
 ```
