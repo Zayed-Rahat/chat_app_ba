@@ -1,8 +1,16 @@
 # Chat AB - Flutter Chat Application
 
-Chat AB is a real-time chat application built with **Flutter** and **Firebase**. It allows users to register, login, add contacts, and chat in real-time with image and text messages. The app also keeps track of the user's online status and last active time.
+Chat AB is a real-time chat application built with **Flutter** and **Firebase**. It allows users to register, login, add contacts, and chat in real-time with image and text messages. The app also keeps track of the user's online status and last active time. 
+
+It uses a simple layered / feature-based structure with a service-style API layer (APIs class) — essentially an informal MVC/layered approach, not a strict Clean architecture.
 
 ---
+
+## Details
+  -  Presentation: screens/ and widgets/ contain UI and directly call APIs — Views + controller logic mixed in widgets/screens.
+  - Data/Service: api/apis.dart acts as a singleton service (Firebase calls, messaging, etc.).
+  - Models: models/ holds data models (ChatUser, Message).
+  - Helpers: helpers/ contains utilities and UI dialogs.
 
 ## Features
 
@@ -22,7 +30,7 @@ Chat AB is a real-time chat application built with **Flutter** and **Firebase**.
 
 ## Screenshots
 
-*(Add screenshots of your app here to make your README more attractive)*
+
 
 ---
 
