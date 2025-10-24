@@ -398,4 +398,33 @@ class APIs {
         .doc(message.sent)
         .update({'msg': updatedMsg});
   }
+
+  /// ************** CHAT CONTROL **************
+
+  // Update deleteAllChats function
+  static Future<void> deleteAllChatsWith(ChatUser chatUser) async {
+    final String conversationId = getConversationID(chatUser.id);
+
+    try {
+      // Get all messages
+      final messages = await firestore
+          .collection('chats/$conversationId/messages')
+          .get();
+
+      // Create a batch
+      final batch = firestore.batch();
+
+      // Add delete operations to batch
+      for (var doc in messages.docs) {
+        batch.delete(doc.reference);
+      }
+
+      // Commit the batch
+      await batch.commit();
+
+      log('All chats deleted with ${chatUser.name}');
+    } catch (e) {
+      log('Error deleting chats: $e');
+    }
+  }
 }

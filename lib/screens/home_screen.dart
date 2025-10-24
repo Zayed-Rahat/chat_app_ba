@@ -174,11 +174,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         case ConnectionState.active:
                         case ConnectionState.done:
                           final data = snapshot.data?.docs;
+
+                          // map to ChatUser
                           _list =
                               data
                                   ?.map((e) => ChatUser.fromJson(e.data()))
                                   .toList() ??
                               [];
+
+                          // sort by last_active descending (most recent first)
+                          _list.sort((a, b) {
+                            final aTime = int.tryParse(a.lastActive) ?? 0;
+                            final bTime = int.tryParse(b.lastActive) ?? 0;
+                            return bTime.compareTo(aTime); // descending
+                          });
 
                           if (_list.isNotEmpty) {
                             return ListView.builder(

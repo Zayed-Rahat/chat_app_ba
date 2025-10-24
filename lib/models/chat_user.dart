@@ -10,6 +10,7 @@ class ChatUser {
     required this.email,
     required this.pushToken,
   });
+
   late String image;
   late String about;
   late String name;
@@ -20,6 +21,7 @@ class ChatUser {
   late String email;
   late String pushToken;
 
+  // Convert Firestore JSON → Dart object
   ChatUser.fromJson(Map<String, dynamic> json) {
     image = json['image'] ?? '';
     about = json['about'] ?? '';
