@@ -1,11 +1,11 @@
 import 'dart:developer';
-
-import 'package:chat_app_ba/screens/home_screen.dart';
+import 'dart:io' show Platform;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_notification_channel/flutter_notification_channel.dart';
-// import 'package:flutter_notification_channel/notification_importance.dart';
+import 'package:flutter_notification_channel/flutter_notification_channel.dart';
+import 'package:flutter_notification_channel/notification_importance.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'firebase_options.dart';
 import 'screens/splash_screen.dart';
@@ -15,6 +15,7 @@ late Size mq;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
 
   //enter full-screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -61,10 +62,28 @@ Future<void> _initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // var result = await FlutterNotificationChannel().registerNotificationChannel(
-  //     description: 'For Showing Message Notification',
-  //     id: 'chats',
-  //     importance: NotificationImportance.IMPORTANCE_HIGH,
-  //     name: 'Chats');
+  //   description: 'For Showing Message Notification',
+  //   id: 'chats',
+  //   importance: NotificationImportance.IMPORTANCE_HIGH,
+  //   name: 'Chats',
+  // );
 
-  // log('\nNotification Channel Result: ');
+  if (Platform.isAndroid) {
+    try {
+      var result = await FlutterNotificationChannel()
+          .registerNotificationChannel(
+            description: 'For Showing Message Notification',
+            id: 'chats',
+            importance: NotificationImportance.IMPORTANCE_HIGH,
+            name: 'Chats',
+          );
+      log('\nNotification Channel Result: $result');
+    } catch (e) {
+      log('Error registering notification channel: $e');
+    }
+  } else {
+    log('Skipping notification channel setup — not running on Android.');
+  }
+
+  // log('\nNotification Channel Result: $result');
 }

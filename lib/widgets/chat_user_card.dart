@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../api/apis.dart';
 import '../helpers/my_date_util.dart';
-// import '../main.dart';
+import '../main.dart';
 import '../models/chat_user.dart';
 import '../models/message.dart';
-// import '../screens/chat_screen.dart';
+import '../screens/chat_screen.dart';
 import 'dialogs/profile_dialogs.dart';
 import 'profile_image.dart';
 
@@ -26,8 +26,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // margin: EdgeInsets.symmetric(horizontal: mq.width * .04, vertical: 4),
-      margin: EdgeInsets.symmetric(horizontal: 0.06 * .04, vertical: 4),
+      margin: EdgeInsets.symmetric(horizontal: mq.width * .04, vertical: 4),
 
       // color: Colors.blue.shade100,
       elevation: 0.5,
@@ -38,10 +37,10 @@ class _ChatUserCardState extends State<ChatUserCard> {
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         onTap: () {
           //for navigating to chat screen
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (_) => ChatScreen(user: widget.user)),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => ChatScreen(user: widget.user)),
+          );
         },
         child: StreamBuilder(
           stream: APIs.getLastMessage(widget.user),
@@ -61,8 +60,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                   );
                 },
                 child: ProfileImage(
-                  // size: mq.height * .055,
-                  size: 0.55 * .055,
+                  size: mq.height * .055,
 
                   url: widget.user.image,
                 ),

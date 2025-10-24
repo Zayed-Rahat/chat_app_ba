@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../helpers/my_date_util.dart';
-// import '../../main.dart';
+import '../../main.dart';
 import '../../models/chat_user.dart';
 import '../widgets/profile_image.dart';
 
@@ -50,23 +50,19 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
 
         //body
         body: Padding(
-          // padding: EdgeInsets.symmetric(horizontal: mq.width * .05),
-          padding: EdgeInsets.symmetric(horizontal: .06 * .05),
+          padding: EdgeInsets.symmetric(horizontal: mq.width * .05),
 
           child: SingleChildScrollView(
             child: Column(
               children: [
                 // for adding some space
-                // SizedBox(width: mq.width, height: mq.height * .03),
-                SizedBox(width: .05, height: .04 * .03),
+                SizedBox(width: mq.width, height: mq.height * .03),
 
                 //user profile picture
-                // ProfileImage(size: mq.height * .2, url: widget.user.image),
-                ProfileImage(size: .4 * .2, url: widget.user.image),
+                ProfileImage(size: mq.height * .2, url: widget.user.image),
 
                 // for adding some space
-                // SizedBox(height: mq.height * .03),
-                SizedBox(height: .05 * .03),
+                SizedBox(height: mq.height * .03),
 
                 // user email label
                 Text(
@@ -75,8 +71,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                 ),
 
                 // for adding some space
-                // SizedBox(height: mq.height * .02),
-                SizedBox(height: .03 * .02),
+                SizedBox(height: mq.height * .02),
 
                 //user about
                 Row(
