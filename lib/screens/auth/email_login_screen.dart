@@ -482,6 +482,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
+                              // ignore: deprecated_member_use
                               color: Colors.blue.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(20),
                             ),

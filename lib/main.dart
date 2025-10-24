@@ -61,13 +61,6 @@ class MyApp extends StatelessWidget {
 Future<void> _initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // var result = await FlutterNotificationChannel().registerNotificationChannel(
-  //   description: 'For Showing Message Notification',
-  //   id: 'chats',
-  //   importance: NotificationImportance.IMPORTANCE_HIGH,
-  //   name: 'Chats',
-  // );
-
   if (Platform.isAndroid) {
     try {
       var result = await FlutterNotificationChannel()
@@ -84,6 +77,4 @@ Future<void> _initializeFirebase() async {
   } else {
     log('Skipping notification channel setup — not running on Android.');
   }
-
-  // log('\nNotification Channel Result: $result');
 }

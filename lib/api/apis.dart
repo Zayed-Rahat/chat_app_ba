@@ -10,7 +10,6 @@ import 'package:http/http.dart';
 import '../models/chat_user.dart';
 import '../models/message.dart';
 import 'notification_access_token.dart';
-// import 'notification_access_token.dart';
 
 class APIs {
   // for authentication
